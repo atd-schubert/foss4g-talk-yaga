@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>One-Way-Databinding with vanilla JavaScript</title>
+    <link type="text/css" rel="stylesheet" href="bootstrap.css"/>
+
+</head>
+<body>
+<div class="container">
+    <input type="text" class="form-control" id="box">
+
+    <div class="jumbotron"><h2>The data is:</h2><p id="text"> </p></div>
+
+    <button class="btn btn-primary" onclick="alert(model.text)">Show model-data</button>
+
+</div>
+</body>
+<script>
+    var box = document.getElementById('box'),
+            text = document.getElementById('text').firstChild;
+
+    window.model = {
+        text: "some example content for a model"
+    };
+
+    box.value = window.model.text;
+    text.nodeValue = window.model.text;
+
+    box.addEventListener('input', function () {
+        text.nodeValue = box.value;
+    });
+</script>
+</html>

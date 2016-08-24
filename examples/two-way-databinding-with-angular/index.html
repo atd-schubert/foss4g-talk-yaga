@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="sampleApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Two-Way-Databinding with Angular</title>
+
+    <script src="jspm_packages/system.js"></script>
+    <script src="config.js"></script>
+    <script>
+        Promise.all([
+            SystemJS.import('bootstrap/css/bootstrap.css!'),
+            SystemJS.import('lib/index')
+        ]).then(function () {
+            console.log('Demo-App is loaded...');
+        }, function (err) {
+            console.error(err.message, err);
+        });
+    </script>
+</head>
+<body ng-controller="sampleCtrl">
+<div class="container">
+    <input type="text" class="form-control" ng-model="result">
+
+    <div class="jumbotron"><h2>The data is:</h2><p>{{ result }}</p></div>
+
+    <button class="btn btn-primary" onclick="alert(globalScope.result)">Show model-data</button>
+</div>
+</body>
+</html>

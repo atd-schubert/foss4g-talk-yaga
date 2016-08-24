@@ -1,0 +1,323 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Two-Way-Databinding on webmapping apps with YAGA and Angular</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/wheregroup.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+	<div id="watermark"></div>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Two-way-databinding on mobile applications with YAGA</h1>
+				</section>
+				<section>
+						<h3>Agenda</h3>
+						<ul>
+							<li>WhereGroup, Arne Schubert</li>
+							<li>The project YAGA</li>
+							<li>What is two-way-databinding?</li>
+							<li>How to use YAGA</li>
+							<li>The project roadmap</li>
+						</ul>
+				</section>
+				<section>
+					<section>
+						<h3>WhereGroup</h3>
+						<p>Modern webmapping solutions</p>
+					</section>
+					<section>
+						<h3>WhereGroup</h3>
+						<h5>Products</h5>
+						<ul>
+							<li>Mapbender</li>
+							<li>Metador</li>
+							<li>MobileMaps</li>
+						</ul>
+					</section>
+					<section>
+						<h3>About me</h3>
+						<p>Arne Schubert - Webdeveloper and App-Architect <br/>@ WhereGroup</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h3>About YAGA</h3>
+						<h5>Maintainers</h5>
+						<ul>
+							<li>Stephan Herritsch</li>
+							<li>Markus Strauß</li>
+							<li>Arne Schubert</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Our requirements on YAGA</h3>
+						<ul>
+							<li>Based on OpenSource Projects</li>
+							<li>Integrated into a well-known Framework</li>
+							<li>Released as OpenSource-Project</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Motivation</h3>
+						<ul>
+							<li>Hybrid mobile App (cross-platform)</li>
+							<li>Mapping components</li>
+							<li>
+								Modern architecture
+								<ul>
+									<li>MVC</li>
+									<li>Modular</li>
+									<li>Good testability</li>
+								</ul>
+							</li>
+							<li>
+								Fulfills typical design paradigms
+								<ul>
+									<li>Mobile first</li>
+									<li>Responsive Design</li>
+									<li>UX-Design</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Used libraries</h3>
+						<ul>
+							<li>Hybrid mobile App (cross-platform): <strong>Cordova</strong></li>
+							<li>Mapping components: <strong>Leaflet</strong></li>
+							<li>
+								Modern architecture: <strong>Angular</strong>
+							</li>
+							<li>
+								Fulfills typical design paradigms: <strong>Ionic</strong>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h3>The role of YAGA</h3>
+						<p>The glue between<br/><b>Angular</b>'s Two-Way-Databinding and<br/><b>Leaflet</b> Elements</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h3>Two-Way-Databinding</h3>
+						<ul>
+							<li>... as a draft in vanilla JavaScript</li>
+							<li>... with Angular</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Vanilla One-Way-Databinding</h3>
+						<pre><code class="javascript">var box = document.getElementById('box'),
+    text = document.getElementById('text').firstChild;
+
+window.model = {
+    text: "some example content for a model"
+};
+
+box.value = window.model.text;
+text.nodeValue = window.model.text;
+
+box.addEventListener('input', function () {
+    text.nodeValue = box.value;
+});</code></pre>
+						<a href="examples/vanilla-one-way/index.html" target="_blank">Example</a>
+					</section>
+					<section>
+						<h3>Vanilla Two-Way-Databinding</h3>
+						<i>schematically</i>
+						<pre><code class="javascript">window.model = {};
+model.__defineGetter__('text', function () {
+    return document.getElementById('box').value;
+});
+model.__defineSetter__('text', function (val) {
+    document.getElementById('box').value = val;
+    document.getElementById('text').firstChild.nodeValue = val;
+});
+
+document.getElementById('box').addEventListener('keyup', function () {
+    model.text = model.text;
+});</code></pre>
+						<a href="examples/vanilla-two-way/index.html" target="_blank">Example</a>
+					</section>
+					<section>
+						<h3>Two-Way-Databinding with Angular</h3>
+						<pre><code class="html">&lt;div class="container" ng-app="example"&gt;
+    &lt;input type="text" class="form-control" ng-model="text"&gt;
+
+    &lt;div class="jumbotron"&gt;
+        &lt;h2&gt;The data is:&lt;/h2&gt;
+        &lt;p id="text"&gt;{{ text }}&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;script src="angular.min.js"&gt;&lt;/script&gt;</code></pre>
+						<a href="examples/angular-two-way/index.html" target="_blank">Example</a>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h3>YAGA Directives</h3>
+						<ul>
+							<li>Map</li>
+							<li>
+								Layer
+								<ul>
+									<li>Tile</li>
+									<li>WMS</li>
+									<li>GeoJSON</li>
+									<li><i>Spatialite</i></li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h3>YAGA-Map Directive</h3>
+						<i>The root directive</i>
+						<pre><code class="html">&lt;yaga-map center="center" zoom="zoom"&gt;
+...
+&lt;/yaga-map&gt;
+...
+&lt;input ng-model="zoom" type="range" max="17" min="0"&gt;
+&lt;input ng-model="center.lat" type="number" step="0.01"&gt;
+&lt;input ng-model="center.lng" type="number" step="0.01"&gt;
+						</code></pre>
+						<a href="examples/yaga-angular/simple.html" target="_blank">Example</a>
+
+					</section>
+					<section>
+						<h3>All layer-directives</h3>
+						<ul>
+							<li>attribution</li>
+							<li>name</li>
+							<li>opacity</li>
+							<li>display</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Tile- and WMS-Layer Directives</h3>
+						<i>The raster-data directives</i>
+						<pre><code class="html">&lt;yaga-tile-layer attribution="'OSM'" url="'http://b.tile.openstreetmap.org/{z}/{x}/{y}.png'" name="'OSM'" opacity="1"&gt;&lt;/yaga-tile-layer&gt;</code></pre>
+						<ul>
+							<li>url</li>
+							<li>min-zoom</li>
+							<li>max-zoom</li>
+							<li><i>layers</i></li>
+						</ul>
+					</section>
+					<section>
+						<h3>GeoJSON-Layer Directive</h3>
+						<i>The vector-data directive</i>
+						<pre><code class="html">&lt;yaga-geojson-layer attribution="'Vector-Layer'" data="{type: 'Feature', features: []}" name="'VectorLayer'" opacity="0.5"&gt;&lt;/yaga-geojson-layer&gt;</code></pre>
+						<ul>
+							<li>data</li>
+							<li>style</li>
+							<li>min-zoom</li>
+							<li>max-zoom</li>
+						</ul>
+					</section>
+					<section>
+						<h3>In descriptive mode</h3>
+						<pre><code class="html">&lt;yaga-map style="min-height: 300px;" center="{lng: 7.1104686, lat: 50.7380324}" zoom="12"&gt;
+    &lt;yaga-tile-layer attribution="'OSM'" url="'http://b.tile.openstreetmap.org/{z}/{x}/{y}.png'" name="'OSM'" opacity="1"&gt;&lt;/yaga-tile-layer&gt;
+    &lt;yaga-tile-layer attribution="'Topo-Map'" url="'http://b.tile.opentopomap.org/{z}/{x}/{y}.png'" name="'TopoMap'" opacity="0.5"&gt;&lt;/yaga-tile-layer&gt;
+    &lt;yaga-geojson-layer name="'vector'" data="geojson"&gt;&lt;/yaga-geojson-layer&gt;
+&lt;/yaga-map></code></pre>
+						<a href="examples/yaga-angular/descriptive.html" target="_blank">Example</a>
+					</section>
+					<section>
+						<h3>Combination of yaga-directives with layertree</h3>
+						<i>A layertree build with angular</i><br/>
+						<a href="examples/yaga-angular/layertree.html" target="_blank">Example</a>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h3>Roadmap</h3>
+						<ul>
+							<li>Angular 2</li>
+							<li>Ionic 2</li>
+							<li>Decorators</li>
+							<li>Make it API-Fix</li>
+							<li>Server components</li>
+							<li>Vektor-Tiles (Tangram-Layer)</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Slides on GitHub</h3>
+						<code>http://gihub.com/atd-schubert/foss4g-talk-yaga</code>
+					</section>
+					<section>
+						<h2>Links</h2>
+						<ul>
+							<li><a href="https://www.yagajs.org/" target="_blank">YAGA Project-Page</a></li>
+							<li><a href="https://bb.yagajs.org/" target="_blank">YAGA Forum</a></li>
+							<li><a href="https://github.com/yagajs" target="_blank">Organization on GitHub</a></li>
+							<li><a href="https://www.wheregroup.com/" target="_blank">WhereGroup GmbH &amp; Co. KG</a></li>
+						</ul>
+					</section>
+					<section>
+						<h2>Additional Links</h2>
+						<ul>
+							<li><a href="http://www.typescriptlang.org/" target="_blank">TypeScript</a></li>
+							<li><a href="https://angularjs.org/" target="_blank">Angular</a></li>
+							<li><a href="https://angular.io/" target="_blank">Angular2</a></li>
+							<li><a href="http://ionicframework.com/" target="_blank">Ionic</a></li>
+							<li><a href="https://cordova.apache.org/" target="_blank">Cordova</a></li>
+							<li><a href="https://nodejs.org/" target="_blank">Node.js</a></li>
+							<li><a href="https://developer.android.com/studio/index.html" target="_blank">Android Studio</a></li>
+						</ul>
+					</section>
+					<section>
+						<h2>Demo App</h2>
+						<i>Go and hike near Bonn</i><br/>
+						<a href="http://demo.yagajs.org/" target="_blank">Wahner-Heider Hiking-App</a>
+					</section>
+				</section>
+				<section>
+					<h2>Thank you for your attention!</h2>
+					<i>Any questions?</i>
+					<br/><br/><br/>
+					<code>http://gihub.com/atd-schubert/foss4g-talk-yaga</code>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>

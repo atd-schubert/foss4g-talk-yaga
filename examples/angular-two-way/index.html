@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Two-Way-Databinding</title>
+    <link type="text/css" rel="stylesheet" href="bootstrap.css"/>
+
+</head>
+<body>
+<div class="container" ng-app="example">
+    <input type="text" class="form-control" ng-model="text">
+
+    <div class="jumbotron"><h2>The data is:</h2><p id="text">{{ text }}</p></div>
+</div>
+</body>
+<script src="angular.min.js"></script>
+<script>
+    angular.module('example', []);
+
+</script>
+</html>
